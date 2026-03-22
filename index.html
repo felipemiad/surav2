@@ -1280,7 +1280,7 @@ Sé conciso pero completo. Máximo 250 palabras por respuesta a menos que sea un
       const finalSystem = systemPrompt.replace('{TOPIC}', topicNames[selectedTopic] || 'General')
         + (readyPdfs.length > 0 ? `\n\nTIENES ${readyPdfs.length} MANUAL(ES) DE SURA CARGADO(S): ${readyPdfs.map(p=>p.name).join(', ')}. Úsalos como fuente primaria de información. Si la respuesta está en los manuales, cita el contenido relevante.` : '');
 
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/emini-3-flash-preview:generateContent?key=${GEMINI_API_KEY}`;
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${GEMINI_API_KEY}`;
 
       const response = await fetch(url, {
         method: 'POST',
