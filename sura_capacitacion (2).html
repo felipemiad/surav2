@@ -1,0 +1,1397 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SURA Capacitación | Agente de Seguros</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sura-navy: #002B5B;
+    --sura-blue: #004B9B;
+    --sura-light-blue: #0066CC;
+    --sura-red: #E4002B;
+    --sura-orange: #FF6B00;
+    --sura-gold: #F5A623;
+    --bg-deep: #00183A;
+    --bg-panel: #001C44;
+    --bg-card: #002358;
+    --text-primary: #F0F4FF;
+    --text-secondary: #8BAFD4;
+    --text-muted: #4A6B8A;
+    --border: rgba(0, 102, 204, 0.25);
+    --glow: rgba(0, 102, 204, 0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg-deep);
+    color: var(--text-primary);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* ─── ANIMATED BACKGROUND ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 10% 0%, rgba(0,75,155,0.35) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 90% 100%, rgba(228,0,43,0.12) 0%, transparent 50%),
+      radial-gradient(ellipse 60% 50% at 50% 50%, rgba(0,43,91,0.5) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ─── HEADER ─── */
+  header {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    height: 68px;
+    background: rgba(0, 24, 58, 0.9);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(16px);
+    flex-shrink: 0;
+  }
+
+  .header-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .sura-logo {
+    width: 42px;
+    height: 42px;
+    background: linear-gradient(135deg, var(--sura-blue), var(--sura-light-blue));
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: white;
+    letter-spacing: -0.5px;
+    box-shadow: 0 0 20px rgba(0,102,204,0.4);
+    flex-shrink: 0;
+  }
+
+  .brand-info h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 17px;
+    font-weight: 400;
+    color: var(--text-primary);
+    letter-spacing: 0.2px;
+  }
+
+  .brand-info p {
+    font-size: 11px;
+    color: var(--text-secondary);
+    font-weight: 300;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    margin-top: 1px;
+  }
+
+  .header-status {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .module-badge {
+    background: rgba(0, 75, 155, 0.3);
+    border: 1px solid rgba(0, 102, 204, 0.4);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 11px;
+    font-weight: 500;
+    color: #7DB8F0;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .status-dot {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #22C55E;
+    box-shadow: 0 0 8px #22C55E;
+    animation: pulse 2.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(0.85); }
+  }
+
+  /* ─── MAIN LAYOUT ─── */
+  .main-layout {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ─── SIDEBAR ─── */
+  .sidebar {
+    width: 270px;
+    flex-shrink: 0;
+    background: rgba(0, 20, 50, 0.7);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+    backdrop-filter: blur(10px);
+    overflow-y: auto;
+  }
+
+  .sidebar-section {
+    padding: 0 16px;
+    margin-bottom: 28px;
+  }
+
+  .sidebar-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    padding: 0 4px;
+  }
+
+  .topic-btn {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s ease;
+    margin-bottom: 3px;
+  }
+
+  .topic-btn:hover {
+    background: rgba(0, 102, 204, 0.15);
+    color: var(--text-primary);
+  }
+
+  .topic-btn.active {
+    background: rgba(0, 102, 204, 0.22);
+    color: #7DB8F0;
+    border-left: 2px solid var(--sura-light-blue);
+  }
+
+  .topic-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    background: rgba(0, 75, 155, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+
+  .topic-btn.active .topic-icon {
+    background: rgba(0, 102, 204, 0.4);
+  }
+
+  .progress-block {
+    margin: 0 16px;
+    padding: 14px;
+    background: rgba(0, 75, 155, 0.15);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+
+  .progress-label {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .progress-bar-bg {
+    height: 5px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    width: 35%;
+    background: linear-gradient(90deg, var(--sura-blue), var(--sura-light-blue));
+    border-radius: 10px;
+    transition: width 0.8s ease;
+  }
+
+  /* ─── CHAT AREA ─── */
+  .chat-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 28px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    scroll-behavior: smooth;
+  }
+
+  .chat-messages::-webkit-scrollbar { width: 5px; }
+  .chat-messages::-webkit-scrollbar-track { background: transparent; }
+  .chat-messages::-webkit-scrollbar-thumb {
+    background: rgba(0, 102, 204, 0.3);
+    border-radius: 10px;
+  }
+
+  /* ─── MESSAGES ─── */
+  .message {
+    display: flex;
+    gap: 14px;
+    max-width: 740px;
+    animation: fadeSlide 0.35s ease forwards;
+    opacity: 0;
+  }
+
+  @keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .message.user {
+    align-self: flex-end;
+    flex-direction: row-reverse;
+    max-width: 580px;
+  }
+
+  .avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    margin-top: 2px;
+  }
+
+  .message.agent .avatar {
+    background: linear-gradient(135deg, var(--sura-blue), var(--sura-light-blue));
+    box-shadow: 0 0 16px rgba(0,102,204,0.35);
+  }
+
+  .message.user .avatar {
+    background: rgba(228, 0, 43, 0.2);
+    border: 1px solid rgba(228, 0, 43, 0.3);
+    font-size: 13px;
+    font-weight: 600;
+    color: #FF6B8A;
+  }
+
+  .bubble {
+    padding: 14px 18px;
+    border-radius: 16px;
+    font-size: 14px;
+    line-height: 1.65;
+    font-weight: 300;
+  }
+
+  .message.agent .bubble {
+    background: rgba(0, 35, 88, 0.8);
+    border: 1px solid var(--border);
+    border-top-left-radius: 4px;
+    color: var(--text-primary);
+    backdrop-filter: blur(8px);
+  }
+
+  .message.user .bubble {
+    background: linear-gradient(135deg, rgba(0,75,155,0.6), rgba(0,102,204,0.5));
+    border: 1px solid rgba(0, 102, 204, 0.4);
+    border-top-right-radius: 4px;
+    color: var(--text-primary);
+  }
+
+  .bubble strong {
+    color: #7DB8F0;
+    font-weight: 600;
+  }
+
+  .bubble .highlight {
+    background: rgba(0, 102, 204, 0.2);
+    border-left: 3px solid var(--sura-light-blue);
+    padding: 10px 14px;
+    border-radius: 0 8px 8px 0;
+    margin: 10px 0;
+    font-size: 13px;
+    color: #A8CCEF;
+  }
+
+  .bubble ul {
+    list-style: none;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .bubble ul li::before {
+    content: '▸';
+    color: var(--sura-light-blue);
+    margin-right: 8px;
+    font-size: 11px;
+  }
+
+  .bubble ul li { font-size: 13.5px; }
+
+  .meta {
+    font-size: 10.5px;
+    color: var(--text-muted);
+    margin-top: 5px;
+    padding: 0 4px;
+  }
+
+  .message.user .meta { text-align: right; }
+
+  /* ─── QUICK CHIPS ─── */
+  .chips-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+  }
+
+  .chip {
+    padding: 6px 13px;
+    border: 1px solid rgba(0, 102, 204, 0.4);
+    border-radius: 20px;
+    background: rgba(0, 75, 155, 0.15);
+    color: #7DB8F0;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .chip:hover {
+    background: rgba(0, 102, 204, 0.3);
+    border-color: rgba(0, 102, 204, 0.7);
+    color: #B8D4F5;
+    transform: translateY(-1px);
+  }
+
+  /* ─── TYPING INDICATOR ─── */
+  .typing-indicator {
+    display: flex;
+    gap: 14px;
+    align-items: flex-end;
+    animation: fadeSlide 0.3s ease forwards;
+    opacity: 0;
+  }
+
+  .typing-dots {
+    padding: 14px 18px;
+    background: rgba(0, 35, 88, 0.8);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    border-top-left-radius: 4px;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+
+  .typing-dots span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--sura-light-blue);
+    animation: bounce 1.4s ease infinite;
+    opacity: 0.5;
+  }
+
+  .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes bounce {
+    0%, 80%, 100% { transform: translateY(0); opacity: 0.5; }
+    40% { transform: translateY(-6px); opacity: 1; }
+  }
+
+  /* ─── INPUT AREA ─── */
+  .input-area {
+    padding: 18px 32px 22px;
+    background: rgba(0, 18, 45, 0.85);
+    border-top: 1px solid var(--border);
+    backdrop-filter: blur(16px);
+    flex-shrink: 0;
+  }
+
+  .input-wrapper {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    background: rgba(0, 35, 88, 0.6);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 12px 14px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .input-wrapper:focus-within {
+    border-color: rgba(0, 102, 204, 0.6);
+    box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+  }
+
+  textarea {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-primary);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.5;
+    resize: none;
+    min-height: 22px;
+    max-height: 120px;
+    overflow-y: auto;
+  }
+
+  textarea::placeholder { color: var(--text-muted); }
+
+  .send-btn {
+    width: 38px;
+    height: 38px;
+    background: linear-gradient(135deg, var(--sura-blue), var(--sura-light-blue));
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 12px rgba(0,102,204,0.3);
+  }
+
+  .send-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 18px rgba(0,102,204,0.5);
+  }
+
+  .send-btn:active { transform: translateY(0); }
+
+  .send-btn svg { width: 16px; height: 16px; fill: white; }
+
+  .input-hint {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-align: center;
+    margin-top: 10px;
+    letter-spacing: 0.3px;
+  }
+
+  /* ─── WELCOME CARD ─── */
+  .welcome-card {
+    background: rgba(0, 35, 88, 0.5);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 24px;
+    margin-bottom: 8px;
+    animation: fadeSlide 0.5s ease forwards;
+    opacity: 0;
+    animation-delay: 0.1s;
+  }
+
+  .welcome-card h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+
+  .welcome-card h2 em {
+    font-style: italic;
+    color: #7DB8F0;
+  }
+
+  .welcome-card p {
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    font-weight: 300;
+    margin-bottom: 16px;
+  }
+
+  .topic-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .topic-pill {
+    padding: 7px 14px;
+    background: rgba(0, 75, 155, 0.25);
+    border: 1px solid rgba(0, 102, 204, 0.35);
+    border-radius: 20px;
+    font-size: 12.5px;
+    color: #7DB8F0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .topic-pill:hover {
+    background: rgba(0, 102, 204, 0.35);
+    transform: translateY(-2px);
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 6px 0;
+    opacity: 0.4;
+  }
+
+  .divider-line { flex: 1; height: 1px; background: var(--border); }
+  .divider-text { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px; }
+
+  /* ─── INFO PANEL ─── */
+  .info-panel {
+    width: 240px;
+    flex-shrink: 0;
+    background: rgba(0, 20, 50, 0.6);
+    border-left: 1px solid var(--border);
+    padding: 20px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    backdrop-filter: blur(10px);
+    overflow-y: auto;
+  }
+
+  .info-card {
+    background: rgba(0, 35, 88, 0.5);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px;
+  }
+
+  .info-card-title {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(0,102,204,0.1);
+  }
+
+  .stat-row:last-child { border-bottom: none; }
+
+  .stat-label { font-size: 12px; color: var(--text-secondary); font-weight: 300; }
+  .stat-value { font-size: 12px; color: #7DB8F0; font-weight: 500; }
+
+  .tip-text {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  .tip-text span { color: var(--sura-gold); }
+
+  .hidden { display: none; }
+
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,10,30,0.85);
+    backdrop-filter: blur(8px);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-box {
+    background: #001C44;
+    border: 1px solid rgba(0,102,204,0.4);
+    border-radius: 20px;
+    padding: 32px;
+    width: 420px;
+    max-width: 92vw;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.6);
+  }
+  .modal-box h3 { font-family: 'DM Serif Display', serif; font-size: 20px; color: var(--text-primary); margin-bottom: 6px; }
+  .modal-box p { font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px; font-weight: 300; }
+  .modal-box p a { color: #7DB8F0; text-decoration: none; }
+  .modal-input { width: 100%; background: rgba(0,35,88,0.6); border: 1px solid var(--border); border-radius: 10px; padding: 11px 14px; color: var(--text-primary); font-family: 'DM Sans', sans-serif; font-size: 13px; outline: none; margin-bottom: 12px; }
+  .modal-input:focus { border-color: rgba(0,102,204,0.6); }
+  .modal-actions { display: flex; gap: 10px; }
+  .btn-primary { flex: 1; padding: 10px; background: linear-gradient(135deg, var(--sura-blue), var(--sura-light-blue)); border: none; border-radius: 10px; color: white; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; }
+  .btn-ghost { padding: 10px 16px; background: transparent; border: 1px solid var(--border); border-radius: 10px; color: var(--text-secondary); font-family: 'DM Sans', sans-serif; font-size: 13px; cursor: pointer; }
+  .modal-note { background: rgba(245,166,35,0.08); border: 1px solid rgba(245,166,35,0.2); border-radius: 8px; padding: 10px 12px; margin-bottom: 14px; font-size: 12px; color: #C8A84B; line-height: 1.5; }
+  #keyWarning { display: none; position: relative; z-index: 5; background: rgba(228,0,43,0.1); border-bottom: 1px solid rgba(228,0,43,0.25); padding: 8px 20px; align-items: center; justify-content: center; gap: 12px; font-size: 13px; color: #FF8FA3; flex-shrink: 0; }
+  #keyWarning button { background: rgba(228,0,43,0.2); border: 1px solid rgba(228,0,43,0.4); border-radius: 6px; color: #FF8FA3; font-size: 12px; padding: 3px 10px; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+  .key-btn { display: flex; align-items: center; gap: 6px; padding: 6px 12px; background: rgba(0,75,155,0.2); border: 1px solid rgba(0,102,204,0.3); border-radius: 8px; color: #7DB8F0; font-size: 12px; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; }
+  .key-btn:hover { background: rgba(0,102,204,0.3); }
+
+  /* ─── PDF PANEL ─── */
+  .pdf-section { margin-top: 4px; }
+
+  .pdf-upload-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 10px;
+    background: rgba(0,75,155,0.15);
+    border: 1px dashed rgba(0,102,204,0.4);
+    border-radius: 10px;
+    color: #7DB8F0;
+    font-size: 12px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+    margin-bottom: 8px;
+  }
+
+  .pdf-upload-btn:hover {
+    background: rgba(0,102,204,0.25);
+    border-color: rgba(0,102,204,0.7);
+  }
+
+  .pdf-list { display: flex; flex-direction: column; gap: 5px; }
+
+  .pdf-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 10px;
+    background: rgba(0,35,88,0.5);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 11.5px;
+    color: var(--text-secondary);
+  }
+
+  .pdf-item.loading { color: #C8A84B; border-color: rgba(245,166,35,0.3); }
+  .pdf-item.ready { color: #4ADE80; border-color: rgba(74,222,128,0.3); }
+  .pdf-item.error { color: #FF8FA3; border-color: rgba(255,143,163,0.3); }
+
+  .pdf-item-name {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .pdf-remove {
+    cursor: pointer;
+    opacity: 0.5;
+    font-size: 14px;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+
+  .pdf-remove:hover { opacity: 1; }
+
+  .pdf-count-badge {
+    background: rgba(74,222,128,0.15);
+    border: 1px solid rgba(74,222,128,0.3);
+    border-radius: 10px;
+    padding: 2px 8px;
+    font-size: 10px;
+    color: #4ADE80;
+    margin-left: 6px;
+  }
+
+  /* Botón adjuntar en input */
+  .attach-btn {
+    width: 34px;
+    height: 34px;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--text-muted);
+    font-size: 16px;
+    transition: all 0.2s;
+  }
+
+  .attach-btn:hover { border-color: rgba(0,102,204,0.5); color: #7DB8F0; }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .info-panel { display: none; }
+    .sidebar { width: 220px; }
+  }
+
+  @media (max-width: 640px) {
+    .sidebar { display: none; }
+    .chat-messages { padding: 20px 18px; }
+    .input-area { padding: 14px 18px 18px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-brand">
+    <div class="sura-logo">S</div>
+    <div class="brand-info">
+      <h1>SURA Capacitación</h1>
+      <p>Plataforma de formación en seguros</p>
+    </div>
+  </div>
+  <div class="header-status">
+    <div class="module-badge" id="currentModuleLabel">Módulo libre</div>
+    <button class="key-btn" onclick="showKeyModal()">🔑 API Key</button>
+    <div class="status-dot">
+      <div class="dot"></div>
+      Gemini 2.0 Flash
+    </div>
+  </div>
+</header>
+
+<!-- KEY WARNING BANNER -->
+<div id="keyWarning">
+  ⚠️ No has configurado tu API Key de Gemini. El agente no funcionará hasta que la ingreses.
+  <button onclick="showKeyModal()">🔑 Configurar ahora</button>
+</div>
+
+<!-- API KEY MODAL -->
+<div class="modal-overlay" id="keyModal">
+  <div class="modal-box">
+    <h3>🔑 Configurar API Key de Gemini</h3>
+    <p>Necesitas una API Key gratuita de Google AI Studio para que el agente funcione.<br>
+    Obtenla en <a href="https://aistudio.google.com/app/apikey" target="_blank">aistudio.google.com/app/apikey</a> — es gratis.</p>
+    <div class="modal-note">⚠️ Tu key se guarda solo en este navegador (localStorage). Nunca se envía a ningún servidor externo excepto directamente a Google.</div>
+    <input class="modal-input" id="keyInput" type="password" placeholder="AIzaSy...tu_api_key_aquí" />
+    <div class="modal-actions">
+      <button class="btn-primary" onclick="saveKey()">✓ Guardar y continuar</button>
+      <button class="btn-ghost" onclick="clearKey()">🗑 Borrar</button>
+      <button class="btn-ghost" onclick="hideKeyModal()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<div class="main-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">Módulos de aprendizaje</div>
+      <button class="topic-btn active" onclick="selectTopic(this, 'vida')">
+        <div class="topic-icon">🛡️</div> Seguros de Vida
+      </button>
+      <button class="topic-btn" onclick="selectTopic(this, 'auto')">
+        <div class="topic-icon">🚗</div> Seguros de Auto
+      </button>
+      <button class="topic-btn" onclick="selectTopic(this, 'hogar')">
+        <div class="topic-icon">🏠</div> Seguros de Hogar
+      </button>
+      <button class="topic-btn" onclick="selectTopic(this, 'salud')">
+        <div class="topic-icon">💊</div> Salud y ARL
+      </button>
+      <button class="topic-btn" onclick="selectTopic(this, 'empresarial')">
+        <div class="topic-icon">🏢</div> Riesgos Empresariales
+      </button>
+      <button class="topic-btn" onclick="selectTopic(this, 'pension')">
+        <div class="topic-icon">📊</div> Pensiones y Ahorro
+      </button>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Habilidades técnicas</div>
+      <button class="topic-btn" onclick="selectTopic(this, 'objeciones')">
+        <div class="topic-icon">💬</div> Manejo de Objeciones
+      </button>
+      <button class="topic-btn" onclick="selectTopic(this, 'siniestros')">
+        <div class="topic-icon">📋</div> Gestión de Siniestros
+      </button>
+      <button class="topic-btn" onclick="selectTopic(this, 'normativa')">
+        <div class="topic-icon">⚖️</div> Normativa y Regulación
+      </button>
+    </div>
+    <div class="sidebar-section pdf-section">
+      <div class="sidebar-label">
+        📄 Manuales cargados
+        <span class="pdf-count-badge" id="pdfCountBadge" style="display:none">0</span>
+      </div>
+      <input type="file" id="pdfFileInput" accept=".pdf" multiple style="display:none" onchange="handlePdfUpload(event)">
+      <button class="pdf-upload-btn" onclick="document.getElementById('pdfFileInput').click()">
+        ➕ Cargar PDF
+      </button>
+      <div class="pdf-list" id="pdfList"></div>
+    </div>
+
+    <div class="progress-block">
+      <div class="progress-label">
+        <span>Progreso del día</span>
+        <span style="color:#7DB8F0">35%</span>
+      </div>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="progressFill"></div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- CHAT -->
+  <main class="chat-area">
+    <div class="chat-messages" id="chatMessages">
+
+      <!-- WELCOME -->
+      <div class="welcome-card">
+        <h2>Bienvenido al agente de<br><em>capacitación SURA</em></h2>
+        <p>Soy tu asistente inteligente de formación en seguros. Puedo explicarte conceptos, resolver casos prácticos, prepararte para evaluaciones y ayudarte a dominar cualquier producto de Suramericana.</p>
+        <div class="topic-pills">
+          <span class="topic-pill" onclick="quickSend('¿Qué es un seguro de vida?')">¿Qué es un seguro de vida?</span>
+          <span class="topic-pill" onclick="quickSend('Explícame la cobertura de un seguro de auto')">Coberturas de Auto</span>
+          <span class="topic-pill" onclick="quickSend('¿Cómo manejar un cliente difícil que objeta el precio?')">Objeciones de precio</span>
+          <span class="topic-pill" onclick="quickSend('¿Cómo se reporta un siniestro de hogar?')">Reportar siniestro</span>
+          <span class="topic-pill" onclick="quickSend('Dame un quiz de seguros de vida')">Quiz de práctica</span>
+        </div>
+      </div>
+
+      <!-- Initial agent message -->
+      <div class="message agent">
+        <div class="avatar">🤖</div>
+        <div>
+          <div class="bubble">
+            ¡Hola! Soy <strong>AsesorAI de SURA</strong>, tu agente de capacitación. Estoy aquí para ayudarte a dominar el universo de los seguros. 🎯
+            <div class="highlight">
+              Puedo explicar conceptos, simular conversaciones con clientes, prepararte para evaluaciones o darte casos prácticos de ventas.
+            </div>
+            <ul>
+              <li>Seguros de vida, auto, hogar, salud y más</li>
+              <li>Técnicas de ventas y manejo de objeciones</li>
+              <li>Normativa colombiana de seguros</li>
+              <li>Gestión de siniestros paso a paso</li>
+            </ul>
+            <div class="chips-row">
+              <span class="chip" onclick="quickSend('Quiero aprender sobre seguros de vida')">🛡️ Seguros de vida</span>
+              <span class="chip" onclick="quickSend('Dame un caso práctico de ventas')">💼 Caso práctico</span>
+              <span class="chip" onclick="quickSend('Dame un quiz de seguros')">📝 Quiz rápido</span>
+            </div>
+          </div>
+          <div class="meta">AsesorAI · ahora</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- INPUT -->
+    <div class="input-area">
+      <div class="input-wrapper">
+        <button class="attach-btn" title="Cargar PDF" onclick="document.getElementById('pdfFileInput').click()">📎</button>
+        <textarea
+          id="userInput"
+          placeholder="Escribe tu pregunta sobre seguros..."
+          rows="1"
+          onkeydown="handleKey(event)"
+          oninput="autoResize(this)"
+        ></textarea>
+        <button class="send-btn" onclick="sendMessage()">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+          </svg>
+        </button>
+      </div>
+      <p class="input-hint">Presiona Enter para enviar · Shift+Enter para nueva línea</p>
+    </div>
+  </main>
+
+  <!-- INFO PANEL -->
+  <aside class="info-panel">
+    <div class="info-card">
+      <div class="info-card-title">📌 Tema actual</div>
+      <div class="stat-row">
+        <span class="stat-label">Módulo</span>
+        <span class="stat-value" id="sideModulo">Libre</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Preguntas hoy</span>
+        <span class="stat-value" id="questionCount">0</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Sesión</span>
+        <span class="stat-value" id="sessionTime">00:00</span>
+      </div>
+    </div>
+
+    <div class="info-card">
+      <div class="info-card-title">💡 Dato del día</div>
+      <div class="tip-text" id="tipOfDay">
+        En Colombia, la <span>Ley 1328 de 2009</span> establece el estatuto del consumidor financiero, fundamental para la gestión de reclamaciones en seguros.
+      </div>
+    </div>
+
+    <div class="info-card">
+      <div class="info-card-title">📊 Temas populares</div>
+      <div class="stat-row">
+        <span class="stat-label">Seguro de Vida</span>
+        <span class="stat-value">🔥</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">SOAT</span>
+        <span class="stat-value">⬆️</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Siniestros</span>
+        <span class="stat-value">📋</span>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<script>
+  // ─── STATE ───
+  let questionCount = 0;
+  let sessionSeconds = 0;
+  let selectedTopic = 'vida';
+  let conversationHistory = [];
+  let GEMINI_API_KEY = localStorage.getItem('sura_gemini_key') || '';
+
+  // PDFs subidos: [{name, fileUri, mimeType}]
+  let uploadedPdfs = [];
+
+  // ─── KNOWLEDGE BASE ───
+  const topicNames = {
+    vida: 'Seguros de Vida', auto: 'Seguros de Auto', hogar: 'Seguros de Hogar',
+    salud: 'Salud y ARL', empresarial: 'Riesgos Empresariales', pension: 'Pensiones',
+    objeciones: 'Manejo de Objeciones', siniestros: 'Gestión de Siniestros', normativa: 'Normativa'
+  };
+
+  const systemPrompt = `Eres AsesorAI, el agente virtual de capacitación de Suramericana de Seguros (SURA) de Colombia.
+
+REGLA ABSOLUTA — MUY IMPORTANTE:
+Cuando el usuario ha cargado manuales o documentos PDF, DEBES responder ÚNICAMENTE basándote en el contenido de esos documentos. 
+- NO inventes información que no esté explícitamente en los documentos cargados.
+- NO uses tu conocimiento general para complementar o "rellenar" respuestas.
+- Si la respuesta no está en los documentos, di exactamente: "No encontré esa información en los manuales cargados. ¿Quieres que te responda con conocimiento general sobre el tema?"
+- Cuando respondas con información del documento, indica de qué sección o parte proviene si es posible.
+- Si el usuario pregunta algo que está parcialmente en el documento, responde solo la parte que sí está y señala qué parte no encontraste.
+
+COMPORTAMIENTO GENERAL:
+1. Usa lenguaje cálido pero profesional, adaptado a Colombia
+2. Explica conceptos técnicos con ejemplos cotidianos y prácticos
+3. Cuando te pidan casos prácticos, simula conversaciones reales con clientes
+4. Para quizzes, genera preguntas SOLO basadas en el contenido de los documentos cargados
+5. Motiva y reconoce el aprendizaje del empleado
+6. Responde en español colombiano natural
+7. Cuando expliques coberturas, sé específico sobre qué cubre y qué no cubre según el documento
+
+TEMA ACTUAL SELECCIONADO: {TOPIC}
+
+Sé conciso pero completo. Máximo 300 palabras por respuesta a menos que sea un quiz o caso práctico.`;
+
+  // ─── PDF UPLOAD — Gemini File API ───
+  async function handlePdfUpload(event) {
+    const files = Array.from(event.target.files);
+    event.target.value = ''; // reset input
+    if (!GEMINI_API_KEY) { showKeyModal(); return; }
+
+    for (const file of files) {
+      if (file.type !== 'application/pdf') {
+        showToast(`❌ "${file.name}" no es un PDF`); continue;
+      }
+      if (file.size > 20 * 1024 * 1024) {
+        showToast(`❌ "${file.name}" supera 20MB`); continue;
+      }
+      await uploadPdf(file);
+    }
+  }
+
+  async function uploadPdf(file) {
+    const itemId = 'pdf_' + Date.now() + '_' + Math.random().toString(36).slice(2);
+    addPdfItem(itemId, file.name, 'loading', '⏳ Subiendo...');
+
+    try {
+      // Paso 1: Iniciar upload resumable
+      const initRes = await fetch(
+        `https://generativelanguage.googleapis.com/upload/v1beta/files?key=${GEMINI_API_KEY}`,
+        {
+          method: 'POST',
+          headers: {
+            'X-Goog-Upload-Protocol': 'resumable',
+            'X-Goog-Upload-Command': 'start',
+            'X-Goog-Upload-Header-Content-Length': file.size,
+            'X-Goog-Upload-Header-Content-Type': 'application/pdf',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ file: { display_name: file.name } })
+        }
+      );
+
+      if (!initRes.ok) {
+        const err = await initRes.json();
+        throw new Error(err.error?.message || 'Error al iniciar la subida');
+      }
+
+      const uploadUrl = initRes.headers.get('X-Goog-Upload-URL');
+      if (!uploadUrl) throw new Error('No se obtuvo URL de subida');
+
+      updatePdfItem(itemId, 'loading', '📤 Procesando...');
+
+      // Paso 2: Subir el archivo
+      const uploadRes = await fetch(uploadUrl, {
+        method: 'POST',
+        headers: {
+          'X-Goog-Upload-Command': 'upload, finalize',
+          'X-Goog-Upload-Offset': '0',
+          'Content-Type': 'application/pdf'
+        },
+        body: file
+      });
+
+      if (!uploadRes.ok) {
+        const err = await uploadRes.json();
+        throw new Error(err.error?.message || 'Error al subir el archivo');
+      }
+
+      const fileData = await uploadRes.json();
+      const fileUri = fileData.file?.uri;
+      const fileName = fileData.file?.name;
+
+      if (!fileUri) throw new Error('No se obtuvo URI del archivo');
+
+      // Paso 3: Esperar a que el archivo esté listo (estado ACTIVE)
+      updatePdfItem(itemId, 'loading', '🔍 Indexando...');
+      await waitForFileActive(fileName);
+
+      // Guardar referencia
+      uploadedPdfs.push({ id: itemId, name: file.name, fileUri, mimeType: 'application/pdf' });
+      updatePdfItem(itemId, 'ready', '✅ Listo');
+      updatePdfCount();
+
+      // Resetear historial para que el nuevo PDF sea el contexto desde cero
+      conversationHistory = [];
+
+      // Notificar al chat
+      appendMessage('agent', formatReply(
+        `📄 Manual **"${file.name}"** cargado y listo. A partir de ahora responderé **únicamente** basándome en el contenido de este documento. Puedes preguntarme cualquier cosa sobre él.`
+      ));
+
+    } catch (err) {
+      updatePdfItem(itemId, 'error', '❌ Error');
+      showToast(`❌ Error con "${file.name}": ${err.message}`);
+    }
+  }
+
+  async function waitForFileActive(fileName, maxWait = 30000) {
+    const start = Date.now();
+    while (Date.now() - start < maxWait) {
+      const res = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/${fileName}?key=${GEMINI_API_KEY}`
+      );
+      const data = await res.json();
+      if (data.state === 'ACTIVE') return;
+      if (data.state === 'FAILED') throw new Error('El archivo falló al procesarse');
+      await new Promise(r => setTimeout(r, 2000));
+    }
+    throw new Error('Timeout esperando que el archivo se procese');
+  }
+
+  // ─── PDF UI HELPERS ───
+  function addPdfItem(id, name, status, statusText) {
+    const list = document.getElementById('pdfList');
+    const div = document.createElement('div');
+    div.className = `pdf-item ${status}`;
+    div.id = id;
+    const shortName = name.length > 22 ? name.slice(0, 20) + '…' : name;
+    div.innerHTML = `
+      <span style="font-size:13px">📄</span>
+      <span class="pdf-item-name" title="${name}">${shortName}</span>
+      <span style="font-size:10px;opacity:0.7">${statusText}</span>
+      <span class="pdf-remove" onclick="removePdf('${id}')" title="Eliminar">✕</span>`;
+    list.appendChild(div);
+  }
+
+  function updatePdfItem(id, status, statusText) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.className = `pdf-item ${status}`;
+    const spans = el.querySelectorAll('span');
+    if (spans[2]) spans[2].textContent = statusText;
+  }
+
+  function removePdf(id) {
+    uploadedPdfs = uploadedPdfs.filter(p => p.id !== id);
+    const el = document.getElementById(id);
+    if (el) el.remove();
+    updatePdfCount();
+  }
+
+  function updatePdfCount() {
+    const badge = document.getElementById('pdfCountBadge');
+    const count = uploadedPdfs.filter(p => p.fileUri).length;
+    badge.textContent = count;
+    badge.style.display = count > 0 ? 'inline' : 'none';
+    document.getElementById('sideModulo').textContent =
+      count > 0 ? `${topicNames[selectedTopic]} + ${count} PDF${count>1?'s':''}` : topicNames[selectedTopic];
+  }
+
+  function showToast(msg) {
+    const t = document.createElement('div');
+    t.style.cssText = 'position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#1a2a4a;border:1px solid rgba(0,102,204,0.4);color:#cde;padding:10px 20px;border-radius:10px;font-size:13px;z-index:999;animation:fadeSlide 0.3s ease';
+    t.textContent = msg;
+    document.body.appendChild(t);
+    setTimeout(() => t.remove(), 3500);
+  }
+  function showKeyModal() {
+    document.getElementById('keyModal').style.display = 'flex';
+    document.getElementById('keyInput').value = GEMINI_API_KEY;
+  }
+
+  function hideKeyModal() {
+    document.getElementById('keyModal').style.display = 'none';
+  }
+
+  function saveKey() {
+    const val = document.getElementById('keyInput').value.trim();
+    if (!val) { alert('Por favor ingresa una API key válida.'); return; }
+    GEMINI_API_KEY = val;
+    localStorage.setItem('sura_gemini_key', val);
+    hideKeyModal();
+    document.getElementById('keyWarning').style.display = 'none';
+  }
+
+  function clearKey() {
+    GEMINI_API_KEY = '';
+    localStorage.removeItem('sura_gemini_key');
+    document.getElementById('keyInput').value = '';
+  }
+
+  // Mostrar advertencia si no hay key al cargar
+  window.addEventListener('load', () => {
+    if (!GEMINI_API_KEY) {
+      document.getElementById('keyWarning').style.display = 'flex';
+    }
+  });
+
+  // ─── SESSION TIMER ───
+  setInterval(() => {
+    sessionSeconds++;
+    const m = String(Math.floor(sessionSeconds / 60)).padStart(2, '0');
+    const s = String(sessionSeconds % 60).padStart(2, '0');
+    document.getElementById('sessionTime').textContent = `${m}:${s}`;
+  }, 1000);
+
+  // ─── TOPIC SELECTOR ───
+  function selectTopic(btn, topic) {
+    document.querySelectorAll('.topic-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    selectedTopic = topic;
+    const name = topicNames[topic] || topic;
+    document.getElementById('currentModuleLabel').textContent = name;
+    document.getElementById('sideModulo').textContent = name;
+  }
+
+  // ─── SEND MESSAGE (Gemini 2.0 Flash + PDFs) ───
+  async function sendMessage() {
+    const input = document.getElementById('userInput');
+    const text = input.value.trim();
+    if (!text) return;
+
+    if (!GEMINI_API_KEY) { showKeyModal(); return; }
+
+    input.value = '';
+    autoResize(input);
+    questionCount++;
+    document.getElementById('questionCount').textContent = questionCount;
+
+    appendMessage('user', text);
+
+    // Construir parts del mensaje actual incluyendo PDFs activos
+    const userParts = [];
+    const readyPdfs = uploadedPdfs.filter(p => p.fileUri);
+
+    // Incluir PDFs en CADA mensaje para que el modelo siempre los tenga como contexto
+    if (readyPdfs.length > 0) {
+      for (const pdf of readyPdfs) {
+        userParts.push({ file_data: { mime_type: pdf.mimeType, file_uri: pdf.fileUri } });
+      }
+      userParts.push({ text: `INSTRUCCIÓN: Responde la siguiente pregunta ÚNICAMENTE con información que encuentres en los documentos PDF adjuntos. Si no está en los documentos, dilo explícitamente.\n\nPregunta: ${text}` });
+    } else {
+      userParts.push({ text });
+    }
+
+    conversationHistory.push({ role: 'user', parts: userParts });
+
+    const typing = showTyping();
+
+    try {
+      const finalSystem = systemPrompt.replace('{TOPIC}', topicNames[selectedTopic] || 'General')
+        + (readyPdfs.length > 0 ? `\n\nTIENES ${readyPdfs.length} MANUAL(ES) DE SURA CARGADO(S): ${readyPdfs.map(p=>p.name).join(', ')}. Úsalos como fuente primaria de información. Si la respuesta está en los manuales, cita el contenido relevante.` : '');
+
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=${GEMINI_API_KEY}`;
+
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          system_instruction: { parts: [{ text: finalSystem }] },
+          contents: conversationHistory,
+          generationConfig: { maxOutputTokens: 1000, temperature: 0.7 }
+        })
+      });
+
+      const data = await response.json();
+      typing.remove();
+
+      if (data.error) {
+        const msg = data.error.message || 'Error desconocido';
+        if (data.error.code === 400 || data.error.code === 403) {
+          appendMessage('agent', `❌ <strong>API Key inválida o sin permisos.</strong><br>Verifica tu clave en <a href="https://aistudio.google.com/app/apikey" target="_blank" style="color:#7DB8F0">Google AI Studio</a>. <span class="chip" onclick="showKeyModal()" style="cursor:pointer;display:inline-block;margin-top:8px">🔑 Cambiar API Key</span>`);
+        } else {
+          appendMessage('agent', `❌ Error de Gemini: ${msg}`);
+        }
+        conversationHistory.pop();
+        return;
+      }
+
+      const reply = data.candidates?.[0]?.content?.parts?.[0]?.text
+        || 'Lo siento, no pude generar una respuesta. ¿Intentamos de nuevo?';
+
+      conversationHistory.push({ role: 'model', parts: [{ text: reply }] });
+      appendMessage('agent', formatReply(reply));
+
+    } catch (err) {
+      typing.remove();
+      conversationHistory.pop();
+      appendMessage('agent', '❌ Error de conexión. Verifica tu acceso a internet e inténtalo de nuevo.');
+    }
+  }
+
+  // ─── FORMAT REPLY ───
+  function formatReply(text) {
+    // Bold **text**
+    text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    // Italic *text*
+    text = text.replace(/\*(.*?)\*/g, '<em>$1</em>');
+    // Line breaks
+    text = text.replace(/\n\n/g, '</p><p style="margin-top:8px">');
+    text = text.replace(/\n/g, '<br>');
+    return text;
+  }
+
+  // ─── APPEND MESSAGE ───
+  function appendMessage(role, content) {
+    const container = document.getElementById('chatMessages');
+    const div = document.createElement('div');
+    div.className = `message ${role}`;
+
+    const now = new Date().toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit' });
+
+    if (role === 'agent') {
+      div.innerHTML = `
+        <div class="avatar">🤖</div>
+        <div>
+          <div class="bubble"><p>${content}</p></div>
+          <div class="meta">AsesorAI · ${now}</div>
+        </div>`;
+    } else {
+      const initials = 'TU';
+      div.innerHTML = `
+        <div class="avatar">${initials}</div>
+        <div>
+          <div class="bubble">${content}</div>
+          <div class="meta">${now}</div>
+        </div>`;
+    }
+
+    container.appendChild(div);
+    container.scrollTop = container.scrollHeight;
+    return div;
+  }
+
+  // ─── TYPING INDICATOR ───
+  function showTyping() {
+    const container = document.getElementById('chatMessages');
+    const div = document.createElement('div');
+    div.className = 'typing-indicator';
+    div.innerHTML = `
+      <div class="avatar" style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--sura-blue),var(--sura-light-blue));display:flex;align-items:center;justify-content:center;font-size:16px;">🤖</div>
+      <div class="typing-dots">
+        <span></span><span></span><span></span>
+      </div>`;
+    container.appendChild(div);
+    container.scrollTop = container.scrollHeight;
+    return div;
+  }
+
+  // ─── QUICK SEND ───
+  function quickSend(text) {
+    document.getElementById('userInput').value = text;
+    sendMessage();
+  }
+
+  // ─── KEY HANDLER ───
+  function handleKey(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  }
+
+  // ─── AUTO RESIZE TEXTAREA ───
+  function autoResize(el) {
+    el.style.height = 'auto';
+    el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+  }
+</script>
+</body>
+</html>
